@@ -7,14 +7,14 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    main.cpp \
-    SignalInterface.cpp
+        main.cpp \
+        SignalInterface.cpp
 
 HEADERS += \
-    SignalInterface.h
+        SignalInterface.h
 
 FORMS += \
-    SignalInterface.ui
+        SignalInterface.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
