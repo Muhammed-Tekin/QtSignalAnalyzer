@@ -17,6 +17,9 @@ public:
     explicit SignalInterface(QWidget *parent = nullptr);
     ~SignalInterface() override;
 
+private slots:
+    void on_loadDataButton_clicked();
+
 private:
     Ui::SignalInterface *ui;
 };
