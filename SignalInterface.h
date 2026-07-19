@@ -22,5 +22,7 @@ private slots:
 
 private:
     Ui::SignalInterface *ui;
+
+    void drawSignals(const QVector<double> &refY, const QVector<double> &actY, double samplingTime);
 };
 #endif // SIGNALINTERFACE_H

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include <QVector>
 
 namespace Ui {
 class DataImportDialog;
@@ -21,6 +22,12 @@ public:
     int getReferenceColumn() const;
     int getActualColumn() const;
     bool isStepResponse() const; // Hangi veri türünün (Step/Frekans) seçildiğini öğrenmek için
+
+    QVector<double> getReferenceData() const;
+    QVector<double> getActualData() const;
+
+    double getSamplingTime() const;
+
 private slots:
     void on_assignRefButton_clicked();
 
@@ -35,8 +42,12 @@ private:
     int refColumnIndex = -1;
     int actColumnIndex = -1;
 
+    QVector<double> referenceData;
+    QVector<double> actualData;
+
     // Renkleri temizlemek ve atamak için işimizi kolaylaştıracak yardımcı bir fonksiyon
     void colorColumn(int colIndex, const QColor &color);
+    void extractDataFromTable();
 };
 
 #endif // DATAIMPORTDIALOG_H

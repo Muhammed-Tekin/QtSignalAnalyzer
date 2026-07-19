@@ -1,4 +1,4 @@
-QT += widgets
+QT += core gui widgets printsupport
 
 CONFIG += c++17
 
@@ -10,12 +10,14 @@ SOURCES += \
         CsvReader.cpp \
         DataImportDialog.cpp \
         main.cpp \
-        SignalInterface.cpp
+        SignalInterface.cpp \
+        qcustomplot.cpp
 
 HEADERS += \
         CsvReader.h \
         DataImportDialog.h \
-        SignalInterface.h
+        SignalInterface.h \
+        qcustomplot.h
 
 FORMS += \
         DataImportDialog.ui \
@@ -25,3 +27,7 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+QMAKE_CXXFLAGS += -Wa,-mbig-obj
+
+QMAKE_CXXFLAGS += -Wno-deprecated-declarations

@@ -113,6 +113,29 @@ void DataImportDialog::colorColumn(int colIndex, const QColor &color)
 }
 
 
+void DataImportDialog::extractDataFromTable()
+{
+    // Eski veriler varsa temizleyelim
+    referenceData.clear();
+    actualData.clear();
+
+    // Tablodaki tüm satırları dönüp verileri double (ondalıklı sayı) olarak listelere ekliyoruz
+    for (int r = 0; r < ui->dataTableWidget->rowCount(); ++r) {
+
+        // Referans sütunundaki sayıyı al
+        QTableWidgetItem *refItem = ui->dataTableWidget->item(r, refColumnIndex);
+        if (refItem) {
+            referenceData.append(refItem->text().toDouble());
+        }
+
+        // Gerçek sinyal sütunundaki sayıyı al
+        QTableWidgetItem *actItem = ui->dataTableWidget->item(r, actColumnIndex);
+        if (actItem) {
+            actualData.append(actItem->text().toDouble());
+        }
+    }
+}
+
 // --- Ana Ekranın Çekeceği Veriler İçin Okuyucu (Getter) Fonksiyonlar ---
 int DataImportDialog::getReferenceColumn() const {
     return refColumnIndex;
@@ -141,6 +164,39 @@ void DataImportDialog::on_okButton_clicked()
                              "Lütfen hem Referans hem de Gerçek Sinyal için birer sütun atayınız!");
         return;
     }
+
+    extractDataFromTable();
     accept();
 }
 
+
+QVector<double> DataImportDialog::getReferenceData() const {
+    return referenceData;
+}
+
+
+QVector<double> DataImportDialog::getActualData() const {
+    return actualData;
+}
+
+
+double DataImportDialog::getSamplingTime() const
+{
+    QString text= ui->samplingTimeLineEdit->text().trimmed(); // Boşlukları kırpar
+
+    // Eğer kullanıcı hiçbir şey yazmamışsa veya sildiyse varsayılanı dön
+    if (text.isEmpty()) {
+        return 0.01;
+    }
+
+    // Metni ondalıklı sayıya (double) çevirmeye çalış
+    bool conversionSucceed;
+    double samplingValue = text.toDouble(&conversionSucceed);
+
+    // Eğer dönüştürülemediyse (harf girdiyse) veya 0'dan küçük/eşit bir zaman girdiyse 0.01 dön
+    if (!conversionSucceed || samplingValue <= 0.0) {
+        return 0.01;
+    }
+
+    return samplingValue; // Her şey düzgünse kullanıcının girdiği değeri dön
+}
