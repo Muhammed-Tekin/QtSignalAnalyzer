@@ -1,4 +1,4 @@
-QT += core gui widgets printsupport
+QT += core gui charts widgets printsupport
 
 CONFIG += c++17
 
@@ -11,13 +11,13 @@ SOURCES += \
         DataImportDialog.cpp \
         main.cpp \
         SignalInterface.cpp \
-        qcustomplot.cpp
+        qcustomchartview.cpp
 
 HEADERS += \
         CsvReader.h \
         DataImportDialog.h \
         SignalInterface.h \
-        qcustomplot.h
+        qcustomchartview.h
 
 FORMS += \
         DataImportDialog.ui \
